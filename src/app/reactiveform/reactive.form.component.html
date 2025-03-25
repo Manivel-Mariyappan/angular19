@@ -1,0 +1,217 @@
+<div class="row">
+
+    <div class="col-lg-3">
+        <h6 class="h6 text-uppercase">Simple Form Without form Group</h6>
+        <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-control" placeholder="Enter Your Name" name="firstName" [formControl]="firstName" />
+            <ng-container *ngIf="firstName.touched && firstName.invalid">
+                <p class="invalid-feedback">firstName is required</p>
+            </ng-container>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-control" placeholder="Enter Last Name" name="lastName" [formControl]="lastName" />
+            <ng-container *ngIf="lastName.touched && lastName.invalid">
+                <p class="invalid-feedback">lastName is required</p>
+            </ng-container>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-control" placeholder="Enter Your Email" name="email" [formControl]="email" />
+            <ng-container *ngIf="email.touched && email.invalid">
+                <p class="invalid-feedback" *ngIf="email.hasError('required')">Email is required</p>
+                <p class="invalid-feedback" *ngIf="email.hasError('email')">Email is invalid</p>
+            </ng-container>
+        </div>
+
+        <div class="d-flex justify-content-end my-2">
+            <button class="btn btn-primary btn-sm" (click)="submitForm()">Submit</button>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <h6 class="h6 text-uppercase">Simple Form With form Group</h6>
+        <form class="form" [formGroup]="personalForm" (ngSubmit)="submitPersonalForm()">
+            <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input class="form-control" placeholder="Enter Your Name" name="firstName"
+                    formControlName="firstName" />
+                <ng-container *ngIf="personalForm.get('firstName')?.touched && personalForm.get('firstName')?.invalid">
+                    <p class="invalid-feedback">firstName is required</p>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input class="form-control" placeholder="Enter Last Name" name="lastName" formControlName="lastName" />
+                <ng-container
+                    *ngIf="this.personalForm.controls['lastName'].touched && personalForm.controls['lastName'].invalid">
+                    <p class="invalid-feedback">lastName is required</p>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input class="form-control" placeholder="Enter Your Email" name="email" formControlName="email" />
+                <ng-container
+                    *ngIf="this.personalForm.controls['email'].touched && personalForm.controls['email'].invalid">
+                    <p *ngIf="this.personalForm.controls['email'].hasError('required')" class="invalid-feedback">
+                        email is required</p>
+                    <p *ngIf="this.personalForm.controls['email'].hasError('email')" class="invalid-feedback">
+                        email is invalid</p>
+                </ng-container>
+            </div>
+
+            <div class="d-flex justify-content-end my-2 gap-2">
+                <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                <button class="btn btn-primary btn-sm" type="button" (click)="resetForm()">Reset</button>
+            </div>
+        </form>
+
+        <div class="bg-secondary p-2">
+            <pre>{{personalForm.value | json}}</pre>
+            <p>{{personalForm.status}}</p>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <h6 class="h6 text-uppercase">Simple Form With form Builder</h6>
+        <form class="form" [formGroup]="personalFormfb" (ngSubmit)="submitPersonalForm1()">
+            <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input class="form-control" placeholder="Enter Your Name" name="firstName"
+                    formControlName="firstName" />
+                <ng-container
+                    *ngIf="personalFormfb.get('firstName')?.touched && personalFormfb.controls['firstName'].invalid">
+                    <p class="invalid-feedback">firstName is required</p>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input class="form-control" placeholder="Enter Last Name" name="lastName" formControlName="lastName" />
+                <ng-container
+                    *ngIf="this.personalFormfb.controls['lastName'].touched && personalFormfb.controls['lastName'].invalid">
+                    <p class="invalid-feedback">lastName is required</p>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input class="form-control" placeholder="Enter Your Email" name="email" formControlName="email" />
+                <ng-container
+                    *ngIf="this.personalFormfb.controls['email'].touched && personalFormfb.controls['email'].invalid">
+                    <p *ngIf="this.personalFormfb.controls['email'].hasError('required')" class="invalid-feedback">
+                        email is required</p>
+                    <p *ngIf="this.personalFormfb.controls['email'].hasError('email')" class="invalid-feedback">
+                        email is invalid</p>
+                </ng-container>
+            </div>
+
+            <div class="d-flex justify-content-end my-2 gap-2">
+                <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+            </div>
+        </form>
+
+        <div class="bg-secondary p-2">
+            <pre>{{personalFormfb.value | json}}</pre>
+            <p>{{personalFormfb.status}}</p>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <h6 class="h6 text-uppercase">Simple Form With form Array</h6>
+
+        <form [formGroup]="arrayForm" (ngSubmit)="submitArrayForm()">
+
+            <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input class="form-control" placeholder="Enter Last Name" name="firstName"
+                    formControlName="firstName" />
+                <ng-container
+                    *ngIf="this.arrayForm.controls['firstName'].touched && arrayForm.controls['firstName'].invalid">
+                    <p class="invalid-feedback">firstName is required</p>
+                </ng-container>
+            </div>
+
+            <button class="btn btn-primary" (click)="addHobbies()">Add Hobbies</button>
+
+
+            <div formArrayName="hobbies" class="my-2">
+                <ng-container *ngFor="let x of hobbies.controls; let i = index">
+                    <div [formGroupName]="i">
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <input class="form-control" placeholder="Enter Last Name" name="name{{i}}"
+                                formControlName="name" />
+                            <ng-container *ngIf="x.get('name')?.touched && x.get('name')?.invalid">
+                                <p class="invalid-feedback">Name is required</p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <input class="form-control" placeholder="Enter Last Name" name="desc{{i}}"
+                                formControlName="desc" />
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="d-flex justify-content-end my-2 gap-2">
+                <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+            </div>
+
+            <div class="bg-secondary p-2">
+                <pre>{{arrayForm.value | json}}</pre>
+                <p>{{arrayForm.status}}</p>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="col-lg-3">
+        <h6 class="h6 text-uppercase">Template Driven Example</h6>
+        <form class="form" #personal1Form="ngForm" (ngSubmit)="submitPersonalInfoForm(personal1Form)">
+
+            <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input class="form-control" placeholder="Enter Your Name" name="firstName"
+                    [(ngModel)]="personalModel.firstName" #firstNameCtrl="ngModel" required />
+                <ng-container *ngIf="firstNameCtrl.invalid && firstNameCtrl.touched">
+                    <p class="invalid-feedback">firstName is required</p>
+                </ng-container>
+            </div>
+
+            {{personalModel | json}}
+
+            <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input class="form-control" placeholder="Enter Last Name" name="lastName"
+                    [(ngModel)]="personalModel.lastName" #lastNameCtrl="ngModel" required [minlength]="12" />
+                <ng-container *ngIf="lastNameCtrl.invalid && lastNameCtrl.touched">
+                    <p class="invalid-feedback" *ngIf="lastNameCtrl.hasError('required')">lastName is required</p>
+                    <p class="invalid-feedback" *ngIf="lastNameCtrl.hasError('minlength')">minlength 12</p>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input class="form-control" placeholder="Enter Your Email" name="email"
+                    [(ngModel)]="personalModel.email" />
+            </div>
+
+            <div class="d-flex justify-content-end my-2 gap-2">
+                <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+            </div>
+        </form>
+
+        <div class="bg-secondary p-2">
+            <p>{{personalFormfb.status}}</p>
+        </div>
+    </div>
+
+</div>

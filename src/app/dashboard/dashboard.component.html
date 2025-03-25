@@ -1,0 +1,9 @@
+<p>dashboard works!</p>
+
+<button (click)="userClickEvent()">user Click!</button>
+
+@for (comment of comments; track comment.id) {
+<div style="background: red">
+    <pre>{{comment | json}}</pre>
+</div>
+}

@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4">
+            @if(isLoading) {
+            <p>Loadin Commets</p>
+            }
+            @else {
+            @for(comment of comments; track comment.id) {
+            <div class="bg-secondary p-2 rounded-2 my-2">
+                <p class="mb-0">{{comment.id}}</p>
+                <p class="mb-0">{{comment.name}}</p>
+                <p class="mb-0">{{comment.email}}</p>
+                <p class="mb-0">{{comment.body}}</p>
+                <p class="mb-0">{{comment.postId}}</p>
+            </div>
+            }
+            }
+        </div>
+        <div class="col-lg-4">
+            @if(isLoading) {
+            <p>Loadin Commets</p>
+            }
+            @else {
+            @if(comments$ | async; as comment;) {
+            @for(comme of comment; track comme.id) {
+            <div class="bg-secondary p-2 rounded-2 my-2">
+                <p class="mb-0">{{comme.id}}</p>
+                <p class="mb-0">{{comme.name}}</p>
+                <p class="mb-0">{{comme.email}}</p>
+                <p class="mb-0">{{comme.body}}</p>
+                <p class="mb-0">{{comme.postId}}</p>
+            </div>
+            }
+            }
+            }
+        </div>
+    </div>
+</div>
